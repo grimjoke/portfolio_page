@@ -18,12 +18,8 @@ try {
   const saved = localStorage.getItem("theme");
   if (saved === "light" || saved === "dark") root.dataset.theme = saved;
 } catch {}
-const toggleTheme = () => {
-  const dark = root.dataset.theme
-    ? root.dataset.theme === "dark"
-    : matchMedia("(prefers-color-scheme: dark)").matches;
-  setTheme(dark ? "light" : "dark");
-};
+// Dark is the primary theme; light ("blueprint on paper") only when chosen.
+const toggleTheme = () => setTheme(root.dataset.theme === "light" ? "dark" : "light");
 
 // ---------- V-model ----------
 // Left arm descends (decomposition), right arm climbs (integration and test).

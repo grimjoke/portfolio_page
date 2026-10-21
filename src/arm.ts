@@ -76,12 +76,13 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
 
   function draw(following: boolean) {
     ctx.clearRect(0, 0, W, H);
-    const ink = css("--ink"), bg = css("--bg"), trace = css("--trace"), muted = css("--muted");
+    // cyan structure, gold joints and gripper, red actuator cores (Stark theme)
+    const line = css("--stark-cyan"), bg = css("--bg-deep"), gold = css("--stark-gold"), red = css("--stark-red"), muted = css("--muted");
     const w = Math.max(8, reach * 0.06);
 
     // end-effector trail
     trail.forEach((p, i) => {
-      ctx.fillStyle = trace;
+      ctx.fillStyle = gold;
       ctx.globalAlpha = (i / trail.length) * 0.5;
       ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2); ctx.fill();
     });
@@ -89,7 +90,7 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
 
     // target crosshair when tracking the cursor
     if (following) {
-      ctx.strokeStyle = trace; ctx.lineWidth = 1;
+      ctx.strokeStyle = line; ctx.lineWidth = 1;
       ctx.setLineDash([3, 4]);
       ctx.beginPath(); ctx.moveTo(pts[3].x, pts[3].y); ctx.lineTo(cursor.x, cursor.y); ctx.stroke();
       ctx.setLineDash([]);
@@ -101,20 +102,21 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
     }
 
     // pedestal
-    ctx.fillStyle = ink;
+    ctx.fillStyle = bg; ctx.strokeStyle = line; ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(base.x - w * 2.2, base.y + w * 1.6);
     ctx.lineTo(base.x + w * 2.2, base.y + w * 1.6);
     ctx.lineTo(base.x + w * 1.2, base.y);
     ctx.lineTo(base.x - w * 1.2, base.y);
-    ctx.closePath(); ctx.fill();
-    ctx.fillRect(base.x - w * 3, base.y + w * 1.6, w * 6, 3);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = line;
+    ctx.fillRect(base.x - w * 3, base.y + w * 1.6, w * 6, 2);
 
     // links: outlined bars
     ctx.lineCap = "round";
     for (let i = 0; i < 3; i++) {
       const lw = w * (1 - i * 0.2);
-      ctx.strokeStyle = ink; ctx.lineWidth = lw;
+      ctx.strokeStyle = line; ctx.lineWidth = lw;
       ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[i + 1].x, pts[i + 1].y); ctx.stroke();
       ctx.strokeStyle = bg; ctx.lineWidth = Math.max(1.5, lw - 5);
       ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[i + 1].x, pts[i + 1].y); ctx.stroke();
@@ -125,7 +127,7 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
     const a = Math.atan2(e.y - pts[2].y, e.x - pts[2].x);
     const open = (1 - grip) * w * 0.9 + w * 0.25;
     const fl = w * 1.5;
-    ctx.strokeStyle = ink; ctx.lineWidth = 3; ctx.lineCap = "round";
+    ctx.strokeStyle = gold; ctx.lineWidth = 3; ctx.lineCap = "round";
     for (const s of [-1, 1]) {
       const px = e.x + Math.cos(a + (s * Math.PI) / 2) * open;
       const py = e.y + Math.sin(a + (s * Math.PI) / 2) * open;
@@ -144,9 +146,9 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
       let q = ((ang - prev) * 180) / Math.PI;
       q = ((q + 540) % 360) - 180;
       prev = ang;
-      ctx.fillStyle = bg; ctx.strokeStyle = ink; ctx.lineWidth = 2.5;
+      ctx.fillStyle = bg; ctx.strokeStyle = gold; ctx.lineWidth = 2.5;
       ctx.beginPath(); ctx.arc(p.x, p.y, w * 0.75, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = trace;
+      ctx.fillStyle = red;
       ctx.beginPath(); ctx.arc(p.x, p.y, w * 0.28, 0, Math.PI * 2); ctx.fill();
       if (!mobile) {
         ctx.fillStyle = muted;

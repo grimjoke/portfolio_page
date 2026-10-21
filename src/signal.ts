@@ -86,7 +86,7 @@ export function mountSignal(canvas: HTMLCanvasElement, names: string[]) {
     ctx.clearRect(0, 0, W, H);
     const top = 64; // clear the fixed header
     const lane = (H - top) / chans.length;
-    const trace = css("--trace"), dim = css("--trace-dim"), grid = css("--grid");
+    const trace = css("--trace"), dim = css("--trace-dim"), ctrl = css("--trace-ctrl"), grid = css("--grid"), label = css("--muted");
 
     ctx.strokeStyle = grid; ctx.lineWidth = 1;
     for (let x = W % 48; x < W; x += 48) {
@@ -102,11 +102,11 @@ export function mountSignal(canvas: HTMLCanvasElement, names: string[]) {
         const y = mid - Math.max(-1, Math.min(1, c.buf[i])) * amp;
         i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
-      ctx.strokeStyle = k === 0 ? trace : dim;
-      ctx.lineWidth = k === 0 ? 1.6 : 1.1;
+      ctx.strokeStyle = k === 0 ? trace : c.kind === "ctrl" ? ctrl : dim;
+      ctx.lineWidth = k === 0 || c.kind === "ctrl" ? 1.6 : 1.1;
       ctx.stroke();
 
-      ctx.fillStyle = dim;
+      ctx.fillStyle = label;
       ctx.font = "12px 'IBM Plex Sans', sans-serif";
       ctx.fillText(c.name, 12, top + lane * k + 14);
     });

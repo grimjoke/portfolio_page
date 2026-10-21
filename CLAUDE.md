@@ -9,13 +9,16 @@ Static portfolio. Vite + vanilla TypeScript, no framework. Deployed to GitHub Pa
 - `src/icons.ts` — line icons for discipline cards (keys referenced from content.ts).
 - `src/signal.ts` — hero canvas: simulated multi-channel biosignal monitor. Cursor speed = EMG activation, EEG mu rhythm desynchronises with activation, click = impulse into a damped 2nd-order "controller" trace.
 - `src/palette.ts` — Ctrl/Cmd+K command palette.
-- `src/style.css` — design tokens on `:root`, light/dark via `prefers-color-scheme` + `data-theme`.
+- `src/style.css` — Stark theme tokens on `:root` (spec: `docs/STARK_THEME.md`). Dark is the default; light only via `data-theme="light"` (theme toggle). Raw palette is `--stark-*`; everything else derives with `color-mix`. No hexes outside the token block.
+  - AA adjustments to the spec in light mode: small gold/cyan text uses `--gold-ink`/`--cyan-ink` (mixed toward text), links use stark red, pills use red 12%, active filter is red with paper text, no H1 glow. In dark, the active filter uses red mixed 70% into bg so gold text passes.
+  - Canvases read `--trace` (gold, live EMG), `--trace-dim` (cyan 45%), `--trace-ctrl` (red), `--grid`, `--muted`; the arm reads `--stark-cyan/gold/red` and `--bg-deep`.
 
 ## Conventions
 - Keep it dependency-light. No UI framework unless there's a real reason.
 - Respect `prefers-reduced-motion` for anything animated.
 - Escape all content with `esc()` when interpolating into HTML.
 - No em dashes in site copy.
+- No uppercase or small-caps headings or labels.
 - Fields marked `TODO` in content.ts are placeholders: fill with real data, never invent publications.
 
 ## Commands
