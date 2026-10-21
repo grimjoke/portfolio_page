@@ -99,7 +99,7 @@ $("#app").innerHTML = `
       ${publications.map((p) => `
         <li>
           <a href="${esc(p.href ?? "#")}">${esc(p.title)}</a>
-          <span>${esc(p.authors)}. <em>${esc(p.venue)}</em>, ${esc(p.year)}.</span>
+          <span>${esc(p.authors.replace(/\.$/, ""))}. <em>${esc(p.venue)}</em>, ${esc(p.year)}.</span>
         </li>`).join("")}
     </ol>
   </section>

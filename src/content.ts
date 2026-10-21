@@ -127,42 +127,59 @@ export const disciplines: Discipline[] = [
   },
 ];
 
+// Sources: public GitHub READMEs, the HEROES project site (heroes.med.auth.gr) and the MDPI / UTwente
+// publication records. Years marked TODO are not confirmed by a public source.
 export const projects: Project[] = [
   {
-    title: "TODO: Project one",
+    title: "HEROES EMS Sim",
+    year: "2026", // TODO: confirm start year (repo last updated Oct 2026)
+    summary:
+      "A headless, deterministic simulation of a person's arm in an EMS-only elbow exoskeleton, built for the HEROES stroke rehabilitation project. The exoskeleton has no motors: it reads surface EMG, infers what the user is trying to do and stimulates their own muscles. The simulation runs the real controller and safety supervisor against a MuJoCo/MyoSuite arm with modelled EMG, stimulation artifacts, fatigue and injected sensor faults, so they can be developed without hardware or a patient.",
+    tags: ["simulation", "EMG", "control"],
+    links: [
+      { label: "Code", href: "https://github.com/grimjoke/heroes_ems" },
+      { label: "HEROES", href: "https://heroes.med.auth.gr" },
+    ],
+  },
+  {
+    title: "Soft wearable robotic gloves",
     year: "2025",
-    summary: "One or two sentences on what it is and what you did.",
-    tags: ["robotics", "control"],
-    links: [{ label: "Code", href: "#" }],
+    summary:
+      "Pneumatic soft robotic gloves with multiple sensor arrays, integrated into a wearable robotics platform to assist finger movement during grasping. Validated with spinal cord injury and stroke participants, with improved finger and grip performance and low reported discomfort and effort.",
+    tags: ["robotics", "biosignals"],
+    links: [{ label: "Paper", href: "https://www.mdpi.com/2076-3417/15/10/5299" }],
   },
   {
-    title: "TODO: Project two",
-    year: "2024",
-    summary: "One or two sentences on what it is and what you did.",
-    tags: ["biosignals", "EMG"],
-  },
-  {
-    title: "TODO: Project three",
+    title: "NeuroSuitUp",
     year: "2023",
-    summary: "One or two sentences on what it is and what you did.",
-    tags: ["simulation", "systems"],
+    summary:
+      "A wearable robotics and serious game platform for motor rehabilitation: a robotic jacket and gloves with IMUs, finger bend and pressure sensors and EMG, driving a serious game. First-author paper on its system architecture and validation; validation with 10 healthy participants showed acceptable correlation in 23 of 30 arm exercises.",
+    tags: ["robotics", "systems", "EMG"],
+    links: [{ label: "Paper", href: "https://www.mdpi.com/1424-8220/23/6/3281" }],
   },
 ];
 
 export const publications: Publication[] = [
   {
-    title: "TODO: Paper title",
-    authors: "Mitsopoulos K., et al.",
-    venue: "Sensors",
-    year: "2024",
-    href: "#",
+    title: "Integration and Validation of Soft Wearable Robotic Gloves for Sensorimotor Rehabilitation of Human Hand Function",
+    authors: "Fiska V., Mitsopoulos K., Mantiou V., Petronikolou V., et al.",
+    venue: "Applied Sciences 15(10), 5299",
+    year: "2025",
+    href: "https://www.mdpi.com/2076-3417/15/10/5299",
   },
   {
-    title: "TODO: Paper title",
+    title: "NeuroSuitUp: System Architecture and Validation of a Motor Rehabilitation Wearable Robotics and Serious Game Platform",
     authors: "Mitsopoulos K., et al.",
-    venue: "Frontiers",
+    venue: "Sensors 23(6), 3281",
     year: "2023",
-    href: "#",
+    href: "https://www.mdpi.com/1424-8220/23/6/3281",
+  },
+  {
+    title: "Affect detection in rehabilitation using wearable robotics, multiple biosensors and serious gaming",
+    authors: "Athanasiou A., Antoniou P., Pandria N., Astaras A., Nizamis K., Mitsopoulos K., et al.",
+    venue: "Medical Education Informatics (MEI 2021)",
+    year: "2021",
+    href: "https://research.utwente.nl/en/publications/affect-detection-in-rehabilitation-using-wearable-robotics-multip/",
   },
 ];
 
