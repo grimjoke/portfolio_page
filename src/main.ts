@@ -8,19 +8,6 @@ import { mountPalette } from "./palette";
 const $ = <T extends HTMLElement>(s: string) => document.querySelector<T>(s)!;
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
-// ---------- theme ----------
-const root = document.documentElement;
-function setTheme(t: "light" | "dark") {
-  root.dataset.theme = t;
-  try { localStorage.setItem("theme", t); } catch {}
-}
-try {
-  const saved = localStorage.getItem("theme");
-  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
-} catch {}
-// Dark is the primary theme; light ("blueprint on paper") only when chosen.
-const toggleTheme = () => setTheme(root.dataset.theme === "light" ? "dark" : "light");
-
 // ---------- V-model ----------
 // Left arm descends (decomposition), right arm climbs (integration and test).
 const vPos = lifecycle.map((_, i) => ({ x: 200 + i * 100, y: 40 + (i <= 3 ? i : 6 - i) * 61.7 }));
@@ -50,7 +37,6 @@ $("#app").innerHTML = `
     <a href="#publications">Papers</a>
     <a href="#contact">Contact</a>
     <button class="k" id="open-palette" aria-label="Open command palette"><kbd>⌘K</kbd></button>
-    <button id="theme" aria-label="Toggle theme">◐</button>
   </nav>
 </header>
 
@@ -184,6 +170,5 @@ renderProjects();
 // ---------- wire up ----------
 mountSignal($<HTMLCanvasElement>("#signal"), channels);
 mountArm($<HTMLCanvasElement>("#arm"), $(".hero"));
-const openPalette = mountPalette(toggleTheme);
+const openPalette = mountPalette();
 $("#open-palette").addEventListener("click", openPalette);
-$("#theme").addEventListener("click", toggleTheme);

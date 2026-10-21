@@ -1,9 +1,9 @@
-// Ctrl/Cmd+K command palette: jump to sections, open links, toggle theme.
+// Ctrl/Cmd+K command palette: jump to sections, open links.
 import { site } from "./content";
 
 type Cmd = { label: string; hint: string; run: () => void };
 
-export function mountPalette(toggleTheme: () => void) {
+export function mountPalette() {
   const cmds: Cmd[] = [
     ...["core", "about", "projects", "publications", "timeline", "contact"].map((id) => ({
       label: `Go to ${id}`,
@@ -11,7 +11,6 @@ export function mountPalette(toggleTheme: () => void) {
       run: () => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }),
     })),
     ...site.links.map((l) => ({ label: `Open ${l.label}`, hint: "link", run: () => window.open(l.href, "_blank") })),
-    { label: "Toggle theme", hint: "view", run: toggleTheme },
   ];
 
   const dlg = document.createElement("dialog");

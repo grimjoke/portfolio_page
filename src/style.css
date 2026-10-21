@@ -1,4 +1,4 @@
-/* Stark theme (see STARK_THEME spec). Dark is primary; light is "blueprint on paper".
+/* Stark theme (see docs/STARK_THEME.md). Dark only.
    Raw palette in --stark-*, everything else derives from it with color-mix. Only hexes in the file live here. */
 :root {
   --stark-red: #C8102E;
@@ -11,12 +11,8 @@
   --stark-border: #2E2224;
   --stark-text: #ECE4E4;
 
-  /* small-text variants of gold/cyan (identical in dark, darkened in light for AA) */
-  --gold-ink: var(--stark-gold);
-  --cyan-ink: var(--stark-cyan);
   --pill-bg: color-mix(in srgb, var(--stark-red) 25%, transparent);
   --active-bg: color-mix(in srgb, var(--stark-bg), var(--stark-red) 70%);
-  --active-fg: var(--stark-gold);
 
   /* semantic tokens used by the rest of the sheet and the canvases */
   --bg: var(--stark-bg);
@@ -33,31 +29,11 @@
   --trace-ctrl: var(--stark-red);
   --grid: color-mix(in srgb, var(--stark-cyan) 5%, transparent);
   --grid-major: color-mix(in srgb, var(--stark-cyan) 9%, transparent);
-  --h1-glow: 0 0 14px color-mix(in srgb, var(--stark-gold) 35%, transparent);
 
   --display: "Rajdhani", system-ui, sans-serif;
   --body: "IBM Plex Sans", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
   color-scheme: dark;
-}
-:root[data-theme="light"] {
-  --stark-bg: #F4F1EC;
-  --stark-text: #1E1718;
-  --stark-gold: #A87A12;
-  --stark-cyan: #0A7EA0;
-  --stark-link: var(--stark-red);
-  --stark-bg-deep: color-mix(in srgb, var(--stark-bg), var(--stark-text) 5%);
-  --stark-raised: color-mix(in srgb, var(--stark-bg), var(--stark-text) 8%);
-  --stark-border: color-mix(in srgb, var(--stark-bg), var(--stark-text) 16%);
-  --gold-ink: color-mix(in srgb, var(--stark-gold), var(--stark-text) 35%);
-  --cyan-ink: color-mix(in srgb, var(--stark-cyan), var(--stark-text) 20%);
-  --pill-bg: color-mix(in srgb, var(--stark-red) 12%, transparent);
-  --active-bg: var(--stark-red);
-  --active-fg: var(--stark-bg);
-  --grid: color-mix(in srgb, var(--stark-cyan) 7%, transparent);
-  --grid-major: color-mix(in srgb, var(--stark-cyan) 13%, transparent);
-  --h1-glow: none; /* a glow on paper reads as a smudge */
-  color-scheme: light;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -78,15 +54,15 @@ body {
 }
 ::selection { background: var(--selection); }
 a { color: var(--stark-link); text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); text-underline-offset: 3px; }
-a:hover { color: var(--cyan-ink); }
+a:hover { color: var(--stark-cyan); }
 :focus-visible { outline: 2px solid var(--stark-cyan); outline-offset: 3px; }
 h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.05; margin: 0; }
 h1, h2 { color: var(--stark-gold); }
 h2 { font-size: 1.9rem; }
 h3 { font-size: 1.3rem; color: var(--stark-red); }
-h4 { color: var(--cyan-ink); }
-strong, b { color: var(--gold-ink); font-weight: 600; }
-em, i { color: var(--cyan-ink); font-style: italic; }
+h4 { color: var(--stark-cyan); }
+strong, b { color: var(--stark-gold); font-weight: 600; }
+em, i { color: var(--stark-cyan); font-style: italic; }
 p { margin: 0 0 1em; max-width: 68ch; }
 
 .wrap { max-width: 1100px; margin: 0 auto; padding-inline: 24px; }
@@ -105,7 +81,7 @@ p { margin: 0 0 1em; max-width: 68ch; }
 .mark:hover { color: var(--stark-gold); }
 .bar nav { display: flex; gap: 18px; align-items: center; }
 .bar nav a { text-decoration: none; color: var(--muted); }
-.bar nav a:hover { color: var(--gold-ink); }
+.bar nav a:hover { color: var(--stark-gold); }
 .bar button {
   background: none; border: 1px solid color-mix(in srgb, var(--stark-red) 60%, transparent); color: var(--ink);
   border-radius: 6px; padding: 3px 8px; font: inherit; cursor: pointer;
@@ -122,16 +98,16 @@ kbd { font: 500 0.8rem var(--body); }
   position: relative; pointer-events: none;
   max-width: 1100px; width: 100%; margin: 0 auto; padding: 0 24px 9vh;
 }
-.hero-disc { list-style: none; padding: 0; margin: 0 0 20px; display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 0.85rem var(--mono); color: var(--gold-ink); }
+.hero-disc { list-style: none; padding: 0; margin: 0 0 20px; display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 0.85rem var(--mono); color: var(--stark-gold); }
 .hero-disc li::before { content: "▸ "; color: var(--stark-red); }
 .hero h1 {
   font-size: clamp(2.6rem, 8.5vw, 7.5rem);
   letter-spacing: -0.01em;
   max-width: 11ch;
-  text-shadow: var(--h1-glow);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--stark-gold) 35%, transparent);
 }
 .hero .role { color: var(--muted); margin-top: 18px; }
-.hero .tag { font-size: 1.25rem; max-width: 40ch; font-style: italic; color: var(--cyan-ink); }
+.hero .tag { font-size: 1.25rem; max-width: 40ch; font-style: italic; color: var(--stark-cyan); }
 .hero .hint { font-size: 0.85rem; color: var(--muted); }
 @media (max-width: 600px) { .hero-text { padding: 0 16px 8vh; } }
 
@@ -142,9 +118,9 @@ main > section { padding-block: 96px; border-top: 1px solid var(--line); }
 @media (max-width: 760px) { .two { grid-template-columns: 1fr; gap: 16px; } main > section { padding-block: 64px; } }
 
 .stack { list-style: none; padding: 0; margin: 24px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.stack li { font-size: 0.85rem; padding: 2px 10px; border-radius: 999px; background: var(--pill-bg); color: var(--gold-ink); border: 1px solid color-mix(in srgb, var(--stark-gold) 30%, transparent); }
+.stack li { font-size: 0.85rem; padding: 2px 10px; border-radius: 999px; background: var(--pill-bg); color: var(--stark-gold); border: 1px solid color-mix(in srgb, var(--stark-gold) 30%, transparent); }
 
-.idx { display: block; font: 500 0.8rem var(--mono); color: var(--gold-ink); letter-spacing: 0.08em; margin-bottom: 8px; }
+.idx { display: block; font: 500 0.8rem var(--mono); color: var(--stark-gold); letter-spacing: 0.08em; margin-bottom: 8px; }
 .idx::before { content: "§ "; color: var(--stark-red); }
 /* HUD bracket under section headings */
 main h2::after { content: ""; display: block; width: 48px; height: 2px; margin-top: 12px; background: var(--stark-cyan); }
@@ -152,7 +128,7 @@ main h2::after { content: ""; display: block; width: 48px; height: 2px; margin-t
 /* ---------- core ---------- */
 .core-head { display: grid; grid-template-columns: 1fr 1.3fr; gap: 32px; align-items: end; }
 .core-head h2 { font-size: clamp(2.2rem, 4.6vw, 3.2rem); }
-.core-head p { margin: 0; color: var(--cyan-ink); font-style: italic; font-size: 1.08rem; }
+.core-head p { margin: 0; color: var(--stark-cyan); font-style: italic; font-size: 1.08rem; }
 @media (max-width: 760px) { .core-head { grid-template-columns: 1fr; gap: 16px; } }
 
 .v-wrap {
@@ -174,7 +150,7 @@ main h2::after { content: ""; display: block; width: 48px; height: 2px; margin-t
 .v-list li { counter-increment: v; font: 0.82rem var(--mono); color: var(--muted); padding: 4px 0; transition: color 0.2s; }
 .v-list li::before { content: counter(v) "  "; color: var(--faint); }
 .v-list li.on { color: var(--ink); }
-.v-list li.on::before { color: var(--gold-ink); }
+.v-list li.on::before { color: var(--stark-gold); }
 @media (max-width: 700px) { .vmodel { display: none; } .v-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; } .v-wrap { padding: 20px 16px 14px; } }
 @media (prefers-reduced-motion: reduce) { .vmodel *, .v-list li, .disc { transition: none !important; } }
 
@@ -195,7 +171,7 @@ main h2::after { content: ""; display: block; width: 48px; height: 2px; margin-t
 .disc h3 { margin-bottom: 8px; }
 .disc p { color: var(--muted); font-size: 0.95rem; margin-bottom: 16px; }
 .tools { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.tools li { font: 0.75rem var(--mono); padding: 1px 8px; border-radius: 4px; background: var(--pill-bg); color: var(--gold-ink); border: 1px solid color-mix(in srgb, var(--stark-gold) 30%, transparent); }
+.tools li { font: 0.75rem var(--mono); padding: 1px 8px; border-radius: 4px; background: var(--pill-bg); color: var(--stark-gold); border: 1px solid color-mix(in srgb, var(--stark-gold) 30%, transparent); }
 
 .head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
 .filters { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -204,11 +180,11 @@ main h2::after { content: ""; display: block; width: 48px; height: 2px; margin-t
   border: 1px solid var(--line); border-radius: 999px; background: none; color: var(--muted);
 }
 .filters button:hover { background: var(--hover-bg); }
-.filters button[aria-pressed="true"] { background: var(--active-bg); color: var(--active-fg); border-color: var(--active-bg); font-weight: 500; }
+.filters button[aria-pressed="true"] { background: var(--active-bg); color: var(--stark-gold); border-color: var(--active-bg); font-weight: 500; }
 
 .projects { list-style: none; padding: 0; margin: 32px 0 0; }
 .projects li { display: grid; grid-template-columns: 80px 1fr; gap: 24px; padding: 24px 0 24px 20px; margin-bottom: 12px; border-left: 2px solid var(--stark-cyan); }
-.projects .yr { color: var(--gold-ink); font: 500 0.95rem var(--mono); }
+.projects .yr { color: var(--stark-gold); font: 500 0.95rem var(--mono); }
 .projects h3 { margin-bottom: 8px; }
 .meta { display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); margin: 0; }
 .meta a { color: var(--stark-link); }
@@ -240,5 +216,5 @@ footer.wrap { max-width: none; background: var(--bg-deep); padding-inline: max(2
 .palette ul { list-style: none; margin: 0; padding: 6px; max-height: 320px; overflow: auto; }
 .palette li { display: flex; justify-content: space-between; padding: 8px 10px; border-radius: 6px; cursor: pointer; }
 .palette li span { color: var(--muted); font-size: 0.8rem; }
-.palette li[aria-selected="true"] { background: var(--hover-bg); color: var(--gold-ink); }
+.palette li[aria-selected="true"] { background: var(--hover-bg); color: var(--stark-gold); }
 .palette .empty { color: var(--muted); cursor: default; }
