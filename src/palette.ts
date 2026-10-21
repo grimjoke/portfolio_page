@@ -5,7 +5,7 @@ type Cmd = { label: string; hint: string; run: () => void };
 
 export function mountPalette(toggleTheme: () => void) {
   const cmds: Cmd[] = [
-    ...["about", "focus", "projects", "publications", "timeline", "contact"].map((id) => ({
+    ...["core", "about", "projects", "publications", "timeline", "contact"].map((id) => ({
       label: `Go to ${id}`,
       hint: "section",
       run: () => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }),

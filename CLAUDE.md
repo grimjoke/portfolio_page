@@ -3,8 +3,10 @@
 Static portfolio. Vite + vanilla TypeScript, no framework. Deployed to GitHub Pages by `.github/workflows/deploy.yml` on push to `main`.
 
 ## Layout
-- `src/content.ts` — ALL copy and data (bio, projects, publications, timeline, links). Edit content here only.
-- `src/main.ts` — renders sections from content, project tag filters, theme toggle.
+- `src/content.ts` — ALL copy and data (bio, disciplines, V-model lifecycle, projects, publications, timeline, links). Edit content here only.
+- `src/main.ts` — renders sections from content (incl. the Core section's V-model SVG and discipline cards; hovering a card highlights its `stages` on the V), project tag filters, theme toggle.
+- `src/arm.ts` — hero robot arm: 3-link planar manipulator, FABRIK IK toward the cursor, idle figure-8, press to grip, live joint angles.
+- `src/icons.ts` — line icons for discipline cards (keys referenced from content.ts).
 - `src/signal.ts` — hero canvas: simulated multi-channel biosignal monitor. Cursor speed = EMG activation, EEG mu rhythm desynchronises with activation, click = impulse into a damped 2nd-order "controller" trace.
 - `src/palette.ts` — Ctrl/Cmd+K command palette.
 - `src/style.css` — design tokens on `:root`, light/dark via `prefers-color-scheme` + `data-theme`.

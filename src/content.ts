@@ -1,6 +1,8 @@
 // All site copy lives here. Edit this file, not the components.
 // Anything marked TODO is a placeholder to replace with real data.
 
+import type { IconName } from "./icons";
+
 export type Link = { label: string; href: string };
 
 export type Project = {
@@ -34,6 +36,8 @@ export const site = {
   location: "Thessaloniki, GR",
   tagline:
     "I build rehabilitation robots and the signal pipelines that tell them what the body is doing.",
+  // Short labels shown under the hero name.
+  disciplines: ["Robotics", "Systems engineering", "Biosignals", "Simulation", "Embedded"],
   // Short paragraph for the about section.
   about: [
     "I work where biosignals meet control: surface EMG, IMU and EEG feeding into systems that adapt rehabilitation to the person using them.",
@@ -51,22 +55,75 @@ export const site = {
 // Channel names drawn on the hero signal canvas. Keep to 4-6.
 export const channels = ["EMG · biceps", "EMG · triceps", "IMU · ω", "EEG · C3", "Ctrl · u(t)"];
 
-export const focus: { title: string; body: string }[] = [
+// Systems engineering V-model stages, left arm top to bottom, then right arm bottom to top.
+export type Stage = "needs" | "reqs" | "arch" | "build" | "integrate" | "verify" | "validate";
+
+export const lifecycle: { id: Stage; label: string }[] = [
+  { id: "needs", label: "User needs" },
+  { id: "reqs", label: "Requirements" },
+  { id: "arch", label: "Architecture" },
+  { id: "build", label: "Design & build" },
+  { id: "integrate", label: "Integration" },
+  { id: "verify", label: "Verification" },
+  { id: "validate", label: "Validation" },
+];
+
+export const core = {
+  title: "Breadth, end to end",
+  intro:
+    "Rehabilitation robots fail at the seams between disciplines. I work across all of them: from what a patient and a clinician need, through architecture and firmware, to the study that shows it works.",
+};
+
+export type Discipline = {
+  icon: IconName;
+  title: string;
+  body: string;
+  tools: string[];
+  stages: Stage[];
+};
+
+export const disciplines: Discipline[] = [
   {
-    title: "Biofeedback for rehabilitation",
-    body: "Using EMG and EEG to select and adapt interventions for people recovering from stroke.",
+    icon: "robot",
+    title: "Robotics",
+    body: "Wearable and stationary rehabilitation systems: kinematics, actuation, control loops and robot software.",
+    tools: ["ROS 2", "C/C++", "Rust"],
+    stages: ["arch", "build", "integrate", "verify"],
   },
   {
-    title: "Rehabilitation robotics",
-    body: "Wearable and stationary systems, from requirements and architecture to firmware and control.",
-  },
-  {
-    title: "Musculoskeletal simulation",
-    body: "OpenSim and MuJoCo models driven by IMU-derived kinematics to close the loop in silico first.",
-  },
-  {
+    icon: "systems",
     title: "Systems engineering",
-    body: "Model-based systems engineering for medical devices, including architecture elicitation methods.",
+    body: "Model-based systems engineering for medical devices, from requirements to architecture, including architecture elicitation methods.",
+    tools: ["Capella / MBSE"],
+    stages: ["needs", "reqs", "arch", "verify", "validate"],
+  },
+  {
+    icon: "signal",
+    title: "Biosignals",
+    body: "Surface EMG, IMU and EEG acquisition and processing, used as biofeedback to select and adapt interventions after stroke.",
+    tools: ["EMG", "IMU", "EEG", "Python"],
+    stages: ["build", "integrate", "verify", "validate"],
+  },
+  {
+    icon: "sim",
+    title: "Musculoskeletal simulation",
+    body: "OpenSim and MuJoCo models driven by IMU-derived kinematics, to close the loop in silico first.",
+    tools: ["OpenSim", "MuJoCo", "Unity"],
+    stages: ["arch", "build", "verify"],
+  },
+  {
+    icon: "chip",
+    title: "Embedded & software",
+    body: "Firmware for sensing hardware, robot software and the tooling that ships it.",
+    tools: ["C/C++", "Rust", "Python", "Docker"],
+    stages: ["build", "integrate"],
+  },
+  {
+    icon: "research",
+    title: "Research & teaching",
+    body: "Running studies with real participants. Teaching in the AUTH MSc in Biomedical Engineering and supervising student projects.",
+    tools: ["Study design", "Supervision"],
+    stages: ["needs", "validate"],
   },
 ];
 

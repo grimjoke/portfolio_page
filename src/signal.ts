@@ -117,9 +117,12 @@ export function mountSignal(canvas: HTMLCanvasElement, names: string[]) {
 
   if (reduce) { draw(); return; }
 
-  let running = true;
-  new IntersectionObserver(([e]) => { running = e.isIntersecting; if (running) loop(); })
-    .observe(canvas);
+  // one rAF chain at a time; paused while the hero is off screen
+  let running = false;
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !running) { running = true; loop(); }
+    else if (!e.isIntersecting) running = false;
+  }).observe(canvas);
 
   function loop() {
     if (!running) return;
@@ -127,5 +130,4 @@ export function mountSignal(canvas: HTMLCanvasElement, names: string[]) {
     draw();
     requestAnimationFrame(loop);
   }
-  loop();
 }
