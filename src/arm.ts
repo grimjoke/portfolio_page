@@ -4,6 +4,8 @@
 // elbow flexes, the triceps does the opposite. A forearm tendon pack drives the fingers, which
 // close on press. Idle: the hand traces a slow figure-8 in front of the rig.
 
+import { telemetry } from "./telemetry";
+
 type P = { x: number; y: number };
 
 export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
@@ -21,6 +23,7 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
   let lastMove = -1e9;
   let grip = 0, gripGoal = 0;
   let t = 0;
+  let prevBend = 0, elbowVel = 0;
   const trail: P[] = [];
 
   const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.y - b.y);
@@ -58,6 +61,7 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
     L1 = 2.3 * u; L2 = 2.0 * u; LH = 1.05 * u;
     target = idleGoal();
     solve(target);
+    sense(); elbowVel = 0; sense(); // second pass: no velocity spike from the jump to the first pose
     trail.length = 0;
   }
 
@@ -67,6 +71,23 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
     ({ e: elbow, w: wrist } = ik(shoulder, wristGoal, L1, L2));
     handAng = dist(wrist, goal) > 1 ? Math.atan2(goal.y - wrist.y, goal.x - wrist.x) : Math.atan2(wrist.y - elbow.y, wrist.x - elbow.x);
     tip = polar(wrist, handAng, LH);
+  }
+
+  // Muscle model for the readouts, the muscle tint and the EMG traces: a tonic term from elbow
+  // flexion (holding against gravity), a phasic burst on the agonist while the elbow moves, and
+  // co-contraction while gripping.
+  function sense() {
+    const th1 = Math.atan2(elbow.y - shoulder.y, elbow.x - shoulder.x);
+    const th2 = Math.atan2(wrist.y - elbow.y, wrist.x - elbow.x);
+    const bend = Math.atan2(Math.sin(th2 - th1), Math.cos(th2 - th1));
+    elbowVel += (bend - prevBend - elbowVel) * 0.3;
+    prevBend = bend;
+    const flex = Math.min(1, Math.max(0, bend / 2.6));
+    const clamp = (v: number) => Math.min(1, Math.max(0, v));
+    telemetry.flex = flex;
+    telemetry.elbowVel = elbowVel;
+    telemetry.biceps = clamp(0.1 + 0.3 * flex + Math.max(0, elbowVel) * 10 + grip * 0.25);
+    telemetry.triceps = clamp(0.08 + 0.25 * (1 - flex) + Math.max(0, -elbowVel) * 10 + grip * 0.15);
   }
 
   function idleGoal(): P {
@@ -86,6 +107,7 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
     target.y += (goal.y - target.y) * 0.08;
     solve(target);
     grip += (gripGoal - grip) * 0.25;
+    sense();
     trail.push({ ...tip });
     if (trail.length > 70) trail.shift();
     return following;
@@ -259,8 +281,8 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
     const biA = along(shoulder, elbow, 0.12, 1, 0.22 * u), biB = along(elbow, wrist, 0.22, 1, 0.14 * u);
     const olecranon = polar(elbow, th2 + Math.PI, 0.28 * u);
     const triA = along(shoulder, elbow, 0.15, -1, 0.22 * u);
-    muscle(biA, biB, u * (0.2 + 0.3 * flex), flex);
-    muscle(triA, olecranon, u * (0.26 - 0.08 * flex), (1 - flex) * 0.5);
+    muscle(biA, biB, u * (0.2 + 0.3 * flex), telemetry.biceps);
+    muscle(triA, olecranon, u * (0.26 - 0.08 * flex), telemetry.triceps);
 
     // hand and joints
     hand(wrist, handAng, 0.15 + grip * 1.05, LH, -1);
@@ -297,8 +319,8 @@ export function mountArm(canvas: HTMLCanvasElement, pressTarget: HTMLElement) {
         `q1 ${q(th1 - Math.PI / 2).toFixed(0).padStart(4)}°`,
         `q2 ${q(bend).toFixed(0).padStart(4)}°`,
         `q3 ${q(handAng - th2).toFixed(0).padStart(4)}°`,
-        `biceps  ${(flex * 100).toFixed(0).padStart(3)}%`,
-        `triceps ${((1 - flex) * 50).toFixed(0).padStart(3)}%`,
+        `biceps  ${(telemetry.biceps * 100).toFixed(0).padStart(3)}%`,
+        `triceps ${(telemetry.triceps * 100).toFixed(0).padStart(3)}%`,
         `grip    ${(grip * 100).toFixed(0).padStart(3)}%`,
       ];
       const x0 = colX + bw + 0.45 * u, y0 = shoulder.y - 0.6 * u;

@@ -1,6 +1,7 @@
-// Hero canvas: scrolling multi-channel "biosignal monitor".
-// Cursor speed acts as muscle activation: move faster, EMG bursts harder.
-// Click injects an impulse that ripples through the control channel.
+// Hero canvas: scrolling multi-channel "biosignal monitor", driven by the hero arm via `telemetry`.
+// EMG = biceps / triceps activation, IMU = elbow angular velocity, EEG mu rhythm desynchronises with
+// effort, u(t) tracks the elbow command. Click injects an impulse into the control channel.
+import { telemetry } from "./telemetry";
 
 type Channel = { name: string; kind: "emg" | "imu" | "eeg" | "ctrl"; buf: Float32Array };
 
@@ -13,8 +14,6 @@ export function mountSignal(canvas: HTMLCanvasElement, names: string[]) {
   let W = 0, H = 0, N = 0;
   let chans: Channel[] = [];
 
-  let activation = 0.08;      // smoothed "effort", 0..1
-  let lastX = 0, lastY = 0, lastT = performance.now();
   let impulse = 0;            // decays after click
   let ctrlState = 0, ctrlVel = 0;
   let t = 0;
@@ -30,15 +29,6 @@ export function mountSignal(canvas: HTMLCanvasElement, names: string[]) {
     }));
   }
 
-  function onMove(x: number, y: number) {
-    const now = performance.now();
-    const dt = Math.max(1, now - lastT);
-    const v = Math.hypot(x - lastX, y - lastY) / dt; // px/ms
-    activation = Math.min(1, activation + v * 0.08);
-    lastX = x; lastY = y; lastT = now;
-  }
-
-  addEventListener("pointermove", (e) => onMove(e.clientX, e.clientY), { passive: true });
   canvas.addEventListener("pointerdown", () => { impulse = 1; });
   addEventListener("resize", resize);
   resize();
@@ -48,20 +38,22 @@ export function mountSignal(canvas: HTMLCanvasElement, names: string[]) {
   function sample(c: Channel, i: number): number {
     switch (c.kind) {
       case "emg": {
-        // agonist / antagonist: second EMG channel gets the co-contraction share
-        const a = i === 0 ? activation : activation * 0.45 + 0.03;
-        return gauss() * (0.04 + a);
+        // first EMG channel is the biceps, second the triceps
+        const a = i === 0 ? telemetry.biceps : telemetry.triceps;
+        return gauss() * (0.03 + a * 0.9);
       }
       case "imu":
-        return Math.sin(t * 1.6) * (0.25 + activation * 0.5) + gauss() * 0.02;
+        // gyro on the forearm: elbow angular velocity
+        return Math.tanh(telemetry.elbowVel * 9) * 0.9 + gauss() * 0.02; // soft-limited, no flat clipping
       case "eeg": {
-        // mu rhythm desynchronises (ERD) as activation rises
-        const mu = Math.sin(t * 2 * Math.PI * 0.18) * 0.35 * (1 - activation * 0.85);
+        // mu rhythm desynchronises (ERD) with motor effort
+        const effort = Math.max(telemetry.biceps, telemetry.triceps);
+        const mu = Math.sin(t * 2 * Math.PI * 0.18) * 0.35 * (1 - effort * 0.85);
         return mu + Math.sin(t * 2.7) * 0.1 + gauss() * 0.08;
       }
       case "ctrl": {
-        // damped second-order response to impulse + tracking activation
-        const ref = activation * 0.6 + impulse * 0.9;
+        // damped second-order response tracking the elbow command, plus click impulse
+        const ref = telemetry.flex * 0.7 + impulse * 0.9;
         const acc = 0.09 * (ref - ctrlState) - 0.22 * ctrlVel;
         ctrlVel += acc; ctrlState += ctrlVel;
         return ctrlState - 0.3;
@@ -71,8 +63,6 @@ export function mountSignal(canvas: HTMLCanvasElement, names: string[]) {
 
   function step() {
     t += 0.05;
-    activation *= 0.965;
-    activation = Math.max(0.05, activation);
     impulse *= 0.9;
     chans.forEach((c, i) => {
       c.buf.copyWithin(0, 1);

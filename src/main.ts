@@ -168,7 +168,8 @@ $(".filters").addEventListener("click", (e) => {
 renderProjects();
 
 // ---------- wire up ----------
-mountSignal($<HTMLCanvasElement>("#signal"), channels);
+// arm first: it writes the telemetry the signal monitor reads
 mountArm($<HTMLCanvasElement>("#arm"), $(".hero"));
+mountSignal($<HTMLCanvasElement>("#signal"), channels);
 const openPalette = mountPalette();
 $("#open-palette").addEventListener("click", openPalette);
