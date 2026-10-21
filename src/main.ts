@@ -48,7 +48,7 @@ $("#app").innerHTML = `
     <h1>${esc(site.name)}</h1>
     <p class="role">${esc(site.role)}<br>${esc(site.org)}</p>
     <p class="tag">${esc(site.tagline)}</p>
-    <p class="hint">Move your cursor: the arm tracks it and the EMG fires. Press to grip.</p>
+    <p class="hint">Move your cursor: the robot reaches for it and the EMG fires. Press to grip.</p>
   </div>
 </section>
 
