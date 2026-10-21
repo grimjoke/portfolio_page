@@ -5,7 +5,7 @@ Static portfolio. Vite + vanilla TypeScript, no framework. Deployed to GitHub Pa
 ## Layout
 - `src/content.ts` — ALL copy and data (bio, disciplines, V-model lifecycle, projects, publications, timeline, links). Edit content here only.
 - `src/main.ts` — renders sections from content (incl. the Core section's V-model SVG and discipline cards; hovering a card highlights its `stages` on the V), project tag filters.
-- `src/arm.ts` — hero humanoid robot bust (arc-reactor chest, head tracks the target). Right arm: analytic 2-link IK (elbow down), hand points at the cursor, fingers close on press, live joint angles q1-q3; left hand rests on the hip. Idle: figure-8.
+- `src/arm.ts` — hero biomimetic arm, shoulder down, bolted to a T-slot column stand (side view, facing left; avoid a beam-over-arm frame, it reads as a gallows). Analytic 2-link IK (elbow down/back), hand points at the cursor. Braided McKibben-style muscles: deltoid pair, biceps (thickens and turns gold with elbow flexion), triceps. Forearm tendon pack, 4 three-segment fingers + thumb that close on press. Readouts: q1-q3, muscle activation, grip. Idle: figure-8.
 - `src/icons.ts` — line icons for discipline cards (keys referenced from content.ts).
 - `src/signal.ts` — hero canvas: simulated multi-channel biosignal monitor. Cursor speed = EMG activation, EEG mu rhythm desynchronises with activation, click = impulse into a damped 2nd-order "controller" trace.
 - `src/palette.ts` — Ctrl/Cmd+K command palette.
