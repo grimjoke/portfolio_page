@@ -48,7 +48,6 @@ export const site = {
     { label: "Google Scholar", href: "https://scholar.google.gr/citations?hl=en&user=PQaSvHwAAAAJ" },
     { label: "ORCID", href: "#" }, // TODO
     { label: "LinkedIn", href: "https://www.linkedin.com/in/konstantinos-mitsopoulos/" },
-    { label: "Email", href: "mailto:you@example.com" }, // TODO
   ] satisfies Link[],
 };
 
@@ -205,19 +204,13 @@ export const publications: Publication[] = [
   },
 ];
 
+// From the LinkedIn profile export (Oct 2026).
 export const timeline: Role[] = [
-  {
-    period: "TODO – now",
-    title: "Robotic Systems Engineer & PhD student",
-    org: "BERD Lab, AUTH",
-  },
-  {
-    period: "TODO",
-    title: "Instruction support, MSc in Biomedical Engineering",
-    org: "AUTH",
-  },
-  { period: "TODO", title: "TODO: earlier role or degree", org: "TODO" },
-];
+  { period: "2023 – now", title: "PhD student", org: "Medical Physics & Digital Innovation Lab, AUTH" },
+  { period: "2020 – now", title: "Research Associate", org: "Aristotle University of Thessaloniki" },
+  { period: "2017 – 2020", title: "MSc, Nanosciences & Nanotechnology", org: "Aristotle University of Thessaloniki" },
+  { period: "2011 – 2017", title: "Integrated Master's, Production Engineering and Management", org: "Democritus University of Thrace" },
+]
 
 export const stack = [
   "Python", "C/C++", "Rust", "ROS 2", "MuJoCo", "OpenSim",
