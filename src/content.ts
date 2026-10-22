@@ -46,7 +46,7 @@ export const site = {
   links: [
     { label: "GitHub", href: "https://github.com/grimjoke" },
     { label: "Google Scholar", href: "https://scholar.google.gr/citations?hl=en&user=PQaSvHwAAAAJ" },
-    { label: "ORCID", href: "#" }, // TODO
+    { label: "ORCID", href: "https://orcid.org/0000-0001-5614-225X" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/konstantinos-mitsopoulos/" },
   ] satisfies Link[],
 };
