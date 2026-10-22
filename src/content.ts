@@ -31,7 +31,7 @@ export type Role = {
 export const site = {
   name: "Konstantinos Mitsopoulos",
   short: "Kostas",
-  role: "Robotic Systems Engineer · PhD candidate",
+  role: "Robotic Systems Engineer · PhD student",
   org: "BERD Lab, Aristotle University of Thessaloniki",
   location: "Thessaloniki, GR",
   tagline:
@@ -41,7 +41,7 @@ export const site = {
   // Short paragraph for the about section.
   about: [
     "I work where biosignals meet control: surface EMG, IMU and EEG feeding into systems that adapt rehabilitation to the person using them.",
-    "Day to day that means systems engineering (MBSE in Capella), musculoskeletal simulation, embedded and robot software, and running studies with real participants. I also teach in the AUTH MSc in Biomedical Engineering and supervise student projects.",
+    "Day to day that means systems engineering (MBSE in Capella), musculoskeletal simulation, embedded and robot software, and running studies with real participants. I also contribute to lab instruction in the AUTH MSc in Biomedical Engineering and help guide student projects.",
   ],
   links: [
     { label: "GitHub", href: "https://github.com/grimjoke" },
@@ -120,9 +120,9 @@ export const disciplines: Discipline[] = [
   },
   {
     icon: "research",
-    title: "Research & teaching",
-    body: "Running studies with real participants. Teaching in the AUTH MSc in Biomedical Engineering and supervising student projects.",
-    tools: ["Study design", "Supervision"],
+    title: "Research & instruction",
+    body: "Running studies with real participants. Contributing to lab instruction in the AUTH MSc in Biomedical Engineering and helping guide student projects.",
+    tools: ["Study design", "Mentoring"],
     stages: ["needs", "validate"],
   },
 ];
@@ -208,12 +208,12 @@ export const publications: Publication[] = [
 export const timeline: Role[] = [
   {
     period: "TODO – now",
-    title: "Robotic Systems Engineer & PhD candidate",
+    title: "Robotic Systems Engineer & PhD student",
     org: "BERD Lab, AUTH",
   },
   {
     period: "TODO",
-    title: "Teaching, MSc in Biomedical Engineering",
+    title: "Instruction support, MSc in Biomedical Engineering",
     org: "AUTH",
   },
   { period: "TODO", title: "TODO: earlier role or degree", org: "TODO" },
