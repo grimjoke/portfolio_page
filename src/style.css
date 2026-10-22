@@ -190,7 +190,8 @@ main h2::after { content: ""; display: block; width: 48px; height: 2px; margin-t
 .meta a { color: var(--stark-link); }
 
 .pubs { padding: 0; margin: 0; list-style: none; display: grid; gap: 20px; }
-.pubs a { font-weight: 500; display: block; }
+.pubs a, .pubs .pub-title { font-weight: 500; display: block; }
+.pubs .pub-title { color: var(--ink); }
 .pubs span { color: var(--muted); font-size: 0.92rem; }
 
 .timeline { list-style: none; padding: 0; margin: 0; }

@@ -45,9 +45,9 @@ export const site = {
   ],
   links: [
     { label: "GitHub", href: "https://github.com/grimjoke" },
-    { label: "Google Scholar", href: "#" }, // TODO
+    { label: "Google Scholar", href: "https://scholar.google.gr/citations?hl=en&user=PQaSvHwAAAAJ" },
     { label: "ORCID", href: "#" }, // TODO
-    { label: "LinkedIn", href: "#" }, // TODO
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/konstantinos-mitsopoulos/" },
     { label: "Email", href: "mailto:you@example.com" }, // TODO
   ] satisfies Link[],
 };
@@ -142,14 +142,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    title: "Soft wearable robotic gloves",
-    year: "2025",
-    summary:
-      "Pneumatic soft robotic gloves with multiple sensor arrays, integrated into a wearable robotics platform to assist finger movement during grasping. Validated with spinal cord injury and stroke participants, with improved finger and grip performance and low reported discomfort and effort.",
-    tags: ["robotics", "biosignals"],
-    links: [{ label: "Paper", href: "https://www.mdpi.com/2076-3417/15/10/5299" }],
-  },
-  {
     title: "NeuroSuitUp",
     year: "2023",
     summary:
@@ -159,7 +151,17 @@ export const projects: Project[] = [
   },
 ];
 
+// Verified against MDPI, Frontiers, JMIR, UTwente and conference records (Oct 2026). Newest first.
+// Not yet included, pending confirmation: a 2020 IoT COVID-19 triage paper listed on Google Scholar.
+// Beware a namesake at IHMC (Florida) whose RL / epidemiology papers show up under this name.
 export const publications: Publication[] = [
+  {
+    title: "Post Hoc Event-Related Potential Analysis of Kinesthetic Motor Imagery-Based Brain-Computer Interface Control of Anthropomorphic Robotic Arms",
+    authors: "Spanos M., Gazea T., Triantafyllidis V., Mitsopoulos K., Vrahatis A., Hadjinicolaou M., Bamidis P.D., Athanasiou A.",
+    venue: "Electronics 14(15), 3106",
+    year: "2025",
+    href: "https://www.mdpi.com/2079-9292/14/15/3106",
+  },
   {
     title: "Integration and Validation of Soft Wearable Robotic Gloves for Sensorimotor Rehabilitation of Human Hand Function",
     authors: "Fiska V., Mitsopoulos K., Mantiou V., Petronikolou V., et al.",
@@ -175,11 +177,31 @@ export const publications: Publication[] = [
     href: "https://www.mdpi.com/1424-8220/23/6/3281",
   },
   {
-    title: "Affect detection in rehabilitation using wearable robotics, multiple biosensors and serious gaming",
+    title: "Does combined training of biofeedback and neurofeedback affect smoking status, behavior, and longitudinal brain plasticity?",
+    authors: "Pandria N., ..., Mitsopoulos K., et al.",
+    venue: "Frontiers in Behavioral Neuroscience 17",
+    year: "2023",
+    href: "https://www.frontiersin.org/journals/behavioral-neuroscience/articles/10.3389/fnbeh.2023.1096122/full",
+  },
+  {
+    title: "Neurorehabilitation Through Synergistic Man-Machine Interfaces Promoting Dormant Neuroplasticity in Spinal Cord Injury: Protocol for a Nonrandomized Controlled Trial",
+    authors: "Athanasiou A., Mitsopoulos K., Praftsiotis A., et al.",
+    venue: "JMIR Research Protocols 11(9), e41152",
+    year: "2022",
+    href: "https://www.researchprotocols.org/2022/9/e41152",
+  },
+  {
+    title: "Affect detection in rehabilitation using wearable robotics, multiple biosensors and serious gaming: a concept using the NeuroSuitUp platform",
     authors: "Athanasiou A., Antoniou P., Pandria N., Astaras A., Nizamis K., Mitsopoulos K., et al.",
     venue: "Medical Education Informatics (MEI 2021)",
     year: "2021",
     href: "https://research.utwente.nl/en/publications/affect-detection-in-rehabilitation-using-wearable-robotics-multip/",
+  },
+  {
+    title: "Prototyping and proof-of-concept of a wearable robotic jacket integrating a wearable jacket with sensors and actuators for upper limb rehabilitation",
+    authors: "Athanasiou A., Mitsopoulos K., Terzopoulos N., Papastergiou V., Arfaras G., Pandria N., Magras I., Astaras A., Bamidis P.D.",
+    venue: "8th Panhellenic Conference on Biomedical Technology, extended abstract",
+    year: "2020",
   },
 ];
 

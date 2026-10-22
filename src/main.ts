@@ -98,7 +98,7 @@ $("#app").innerHTML = `
     <ol class="pubs">
       ${publications.map((p) => `
         <li>
-          <a href="${esc(p.href ?? "#")}">${esc(p.title)}</a>
+          ${p.href ? `<a href="${esc(p.href)}">${esc(p.title)}</a>` : `<strong class="pub-title">${esc(p.title)}</strong>`}
           <span>${esc(p.authors.replace(/\.$/, ""))}. <em>${esc(p.venue)}</em>, ${esc(p.year)}.</span>
         </li>`).join("")}
     </ol>
